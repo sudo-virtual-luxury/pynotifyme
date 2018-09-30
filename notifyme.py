@@ -4,8 +4,8 @@ from bs4 import BeautifulSoup
 import requests
 
 def main():
-	#req = requests.get("https://www.itescam.edu.mx/portal/avisos.php")
-	req = requests.get("http://localhost:8080/xd/notifyme/avisos.php")
+	req = requests.get("https://www.itescam.edu.mx/portal/avisos.php")
+	#req = requests.get("http://localhost:8080/xd/notifyme/avisos.php")
 	html = BeautifulSoup(req.text, "html.parser")
 	avisos = html.find_all('div',{'class':'panel panel-warning'})
 

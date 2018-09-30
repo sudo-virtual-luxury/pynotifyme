@@ -2,6 +2,7 @@
 
 from bs4 import BeautifulSoup
 import requests
+import time
 
 def main():
 	req = requests.get("https://www.itescam.edu.mx/portal/avisos.php")
@@ -38,15 +39,30 @@ def main():
 		contador = contador - 1
 
 
+	horaActual = time.strftime("%H:%M")
+	diaActual = time.strftime("%A")
+
 	news = open('new.txt','w')
-	news.write("[Announcements: "+ str(contador) + "]")
+	resultado = "[Announcements today: "+ str(contador) + ", Last update: " + diaActual + " " +  horaActual + " Hrs]"
+	news.write(resultado)
 	news.close()
 
-	oldnotifications = open('oldnotifications.txt','w')
-	for i in range(len(nn)):
-		titulo = nn[i]
-		oldnotifications.write(titulo)
-	oldnotifications.close()
+	currentdayfile = open('currentday.txt','r')
+	currentdaysave = currentdayfile.read()
+
+	diaActualCompare = diaActual + "\n"
+
+	if currentdaysave != diaActualCompare:
+		print "son diferentes"
+		oldnotifications = open('oldnotifications.txt','wr')
+		for i in range(len(nn)):
+			titulo = nn[i]
+			oldnotifications.write(titulo)
+		oldnotifications.close()
+		currentdayfilew = open('currentday.txt','w')
+		currentdayfilew.write(diaActualCompare)
+		currentdayfilew.close()
+	currentdayfile.close()
 
 
 main()
